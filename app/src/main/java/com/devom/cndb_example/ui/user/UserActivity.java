@@ -1,16 +1,99 @@
 package com.devom.cndb_example.ui.user;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ProgressBar;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.devom.cndb_example.R;
+import com.devom.cndb_example.adapters.UserAdapter;
+import com.devom.cndb_example.app.BaseApplication;
+import com.devom.cndb_example.models.User;
 
-public class UserActivity extends AppCompatActivity {
+import com.devom.cndb_example.ui.userAdd.AddUserActivity;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.List;
+
+import javax.inject.Inject;
+
+public class UserActivity extends AppCompatActivity implements UserView {
+    private ProgressBar progressBar;
+    private static long back_pressed;
+    private static final long SECONDS_LAPSE = 2000;
+    UserAdapter adapter;
+
+    @Inject
+    UserPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_user);
+
+        ((BaseApplication) getApplication()).plusPresenterSubComponent().inject(this);
+
+        progressBar = findViewById(R.id.pb_load);
+
+        FloatingActionButton fabAdd = findViewById(R.id.fab_add);
+        fabAdd.setOnClickListener(v -> startActivity(new Intent(this, AddUserActivity.class)));
+
+        Toolbar toolbar = findViewById(R.id.tb_toolbar);
+        if (toolbar != null) {
+            setSupportActionBar(toolbar);
+            toolbar.setTitleTextColor(Color.WHITE);
+            toolbar.setTitle(getString(R.string.title_user_list));
+        }
+
+        adapter = new UserAdapter();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+
+        RecyclerView rvCity = findViewById(R.id.rv_users);
+        rvCity.setAdapter(adapter);
+        rvCity.setLayoutManager(layoutManager);
+
+        presenter.setView(this);
+        presenter.getUserList();
+    }
+
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void setItemsOnAdapters(List<User> users) {
+        adapter.setData(users);
+    }
+
+    @Override
+    public void onFailure(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        presenter.onDestroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (back_pressed + SECONDS_LAPSE > System.currentTimeMillis()) super.onBackPressed();
+        else
+            Toast.makeText(getBaseContext(), getText(R.string.msj_exit_app), Toast.LENGTH_SHORT).show();
+        back_pressed = System.currentTimeMillis();
     }
 }

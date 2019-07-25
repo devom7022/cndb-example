@@ -1,8 +1,10 @@
 package com.devom.cndb_example.ui.user;
 
+import android.os.Handler;
+
 import com.devom.cndb_example.api.ApiClient;
-import com.devom.cndb_example.app.BaseApplication;
 import com.devom.cndb_example.models.User;
+import com.devom.cndb_example.repository.UsersSource;
 
 import java.util.List;
 
@@ -25,27 +27,15 @@ public class UserInteractor {
     }
 
     void getUsers(final OnFinishedListener listener) {
-        if (!BaseApplication.getConnectionToNetwork()) {
-            listener.onFailure("Revise su conexión a internet");
-        }
-        /*
-        Call<ResponseCity> call = apiClient.getUserList();
-        call.enqueue(new Callback<ResponseCity>() {
-            @Override
-            public void onResponse(Call<ResponseCity> call, Response<ResponseCity> response) {
-                if (response.isSuccessful()) {
-                    dataResponse = response.body();
-                    if (dataResponse != null) {
-                        listener.onSuccess(dataResponse.getBrastlewark());
-                    }
-                }
-            }
+        new Handler().postDelayed(() -> {
+            UsersSource dataSource = UsersSource.getInstance();
+            List<User> users = dataSource.getUsers();
+            if (users.size()>0)
+                listener.onSuccess(users);
+            else
+                listener.onFailure("No hay usuarios registrados");
 
-            @Override
-            public void onFailure(Call<ResponseCity> call, Throwable t) {
-                listener.onFailure("Intente más tarde");
-            }
-        });*/
+        }, 2000);
     }
 
 }

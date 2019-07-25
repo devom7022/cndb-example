@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">cndb-example</string>
+    <string name="hint_name">Nombre</string>
+    <string name="hint_age">Edad</string>
+    <string name="hint_color">Color favorito</string>
+    <string name="txt_save">Guardar</string>
+    <string name="title_user_list">Lista de usuarios</string>
+    <string name="title_add_user">Agregar un usuario</string>
+    <string name="msj_exit_app">Presione nuevamente para salir</string>
 </resources>
