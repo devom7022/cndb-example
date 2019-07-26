@@ -15,7 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.userAdd.AddUserActivity"></activity>
+        <activity android:name=".ui.greet.GreetActivity" />
+
+        <activity android:name=".ui.userAdd.AddUserActivity" />
+
         <activity android:name=".ui.user.UserActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

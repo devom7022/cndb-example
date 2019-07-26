@@ -1,5 +1,6 @@
 package com.devom.cndb_example.ui.user;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,14 +17,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.devom.cndb_example.R;
 import com.devom.cndb_example.adapters.UserAdapter;
 import com.devom.cndb_example.app.BaseApplication;
+import com.devom.cndb_example.models.ResultUserList;
 import com.devom.cndb_example.models.User;
-
 import com.devom.cndb_example.ui.userAdd.AddUserActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import static com.devom.cndb_example.utils.Constants.RESULT_DATA;
 
 public class UserActivity extends AppCompatActivity implements UserView {
     private ProgressBar progressBar;
@@ -43,7 +47,7 @@ public class UserActivity extends AppCompatActivity implements UserView {
         progressBar = findViewById(R.id.pb_load);
 
         FloatingActionButton fabAdd = findViewById(R.id.fab_add);
-        fabAdd.setOnClickListener(v -> startActivity(new Intent(this, AddUserActivity.class)));
+        fabAdd.setOnClickListener(v -> startActivityForResult(new Intent(this, AddUserActivity.class), 1));
 
         Toolbar toolbar = findViewById(R.id.tb_toolbar);
         if (toolbar != null) {
@@ -52,7 +56,7 @@ public class UserActivity extends AppCompatActivity implements UserView {
             toolbar.setTitle(getString(R.string.title_user_list));
         }
 
-        adapter = new UserAdapter();
+        adapter = new UserAdapter(presenter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
         RecyclerView rvCity = findViewById(R.id.rv_users);
@@ -95,5 +99,21 @@ public class UserActivity extends AppCompatActivity implements UserView {
         else
             Toast.makeText(getBaseContext(), getText(R.string.msj_exit_app), Toast.LENGTH_SHORT).show();
         back_pressed = System.currentTimeMillis();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                ResultUserList list = data.getParcelableExtra(RESULT_DATA);
+
+                List<User> newUsers = list.getUsers();
+                setItemsOnAdapters(newUsers);
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

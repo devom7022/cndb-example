@@ -21,20 +21,24 @@ public class UserPresenter implements UserInteractor.OnFinishedListener {
         view = null;
     }
 
+    public void deleteUser(User user){
+        interactor.deleteUser(user,this);
+    }
+
     void getUserList() {
         if (view != null) {
             view.showProgress();
         }
         interactor.getUsers(this);
     }
-
+/*
     void setUserToList(User user) {
         if (view != null) {
             view.showProgress();
         }
-        interactor.addUser(user, this);
+        interactor.deleteUser(user, this);
     }
-
+*/
     @Override
     public void onFailure(String error) {
         if (view != null) {

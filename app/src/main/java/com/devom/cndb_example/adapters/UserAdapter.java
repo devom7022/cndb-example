@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.devom.cndb_example.R;
 import com.devom.cndb_example.adapterViewHolder.UserViewHolder;
 import com.devom.cndb_example.models.User;
+import com.devom.cndb_example.ui.user.UserPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +18,21 @@ import java.util.List;
 public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
 
     private List<User> userList = new ArrayList<>();
+    private View view;
+    UserPresenter presenter;
 
     public UserAdapter() {
     }
 
+    public UserAdapter(UserPresenter presenter) {
+        this.presenter = presenter;
+    }
+
+
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_user, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_user, parent, false);
         return new UserViewHolder(view);
     }
 
@@ -34,7 +42,15 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
 
         holder.bind(localItem);
 
-        holder.itemView.setOnClickListener(v -> {
+        holder.ivDelete.setOnClickListener(v -> {
+            userList.remove(localItem);
+            notifyDataSetChanged();
+/*
+            Intent returnIntent = new Intent();
+            ResultUserList list = new ResultUserList(userList);
+            returnIntent.putExtra(RESULT_DATA, list);
+            ((UserActivity)view.getContext()).setResult(Activity.RESULT_OK,returnIntent);*/
+            presenter.deleteUser(localItem);
 
         });
 

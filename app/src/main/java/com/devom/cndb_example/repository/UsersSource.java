@@ -1,22 +1,20 @@
 package com.devom.cndb_example.repository;
 
-import android.util.Log;
-
 import com.devom.cndb_example.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class UsersSource {
-    private static String TAG = UsersSource.class.getSimpleName();
     private static UsersSource instance;
 
-    private List<User> userList = new ArrayList<>();
+    private List<User> userList;
 
     private UsersSource() {
+        userList = new ArrayList<>();
     }
 
-    public static UsersSource getInstance() {
+    public static synchronized UsersSource getInstance() {
         if (instance == null) {
             instance = new UsersSource();
         }
@@ -24,15 +22,15 @@ public class UsersSource {
         return instance;
     }
 
-    public void showTAG() {
-        Log.d(TAG, "dataSource");
-    }
-
     public List<User> getUsers() {
-        return userList;
+        return this.userList;
     }
 
     public void addUser(User user) {
         userList.add(user);
+    }
+
+    public void deleteUser(User user) {
+        userList.remove(user);
     }
 }

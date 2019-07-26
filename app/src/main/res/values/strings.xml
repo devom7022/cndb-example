@@ -7,4 +7,6 @@
     <string name="title_user_list">Lista de usuarios</string>
     <string name="title_add_user">Agregar un usuario</string>
     <string name="msj_exit_app">Presione nuevamente para salir</string>
+    <string name="title_user_add">Agregar usuario</string>
+    <string name="empty_data">Todos los datos son obligatorios</string>
 </resources>
