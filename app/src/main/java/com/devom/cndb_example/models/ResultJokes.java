@@ -3,17 +3,15 @@ package com.devom.cndb_example.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 public class ResultJokes {
     @SerializedName("type")
     @Expose
     private String type;
     @SerializedName("value")
     @Expose
-    private List<Joke> value;
+    private Joke value;
 
-    public ResultJokes(String type, List<Joke> value) {
+    public ResultJokes(String type, Joke value) {
         this.type = type;
         this.value = value;
     }
@@ -26,11 +24,11 @@ public class ResultJokes {
         this.type = type;
     }
 
-    public List<Joke> getValue() {
+    public Joke getValue() {
         return value;
     }
 
-    public void setValue(List<Joke> value) {
+    public void setValue(Joke value) {
         this.value = value;
     }
 }

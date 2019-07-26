@@ -1,5 +1,7 @@
 package com.devom.cndb_example.ui.greet;
 
+import android.app.Application;
+
 import com.devom.cndb_example.models.Joke;
 
 public class GreetPresenter implements GreetInteractor.OnFinishedListener {
@@ -7,8 +9,8 @@ public class GreetPresenter implements GreetInteractor.OnFinishedListener {
     private GreetView view;
     private GreetInteractor interactor;
 
-    public GreetPresenter(GreetInteractor interactor) {
-        this.interactor = interactor;
+    GreetPresenter(Application app) {
+        this.interactor = new GreetInteractor(app);
     }
 
     void setView(GreetView view) {

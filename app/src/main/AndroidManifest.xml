@@ -14,12 +14,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ui.greet.GreetActivity" />
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
 
-        <activity android:name=".ui.userAdd.AddUserActivity" />
+        <activity
+            android:name=".ui.greet.GreetActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".ui.user.UserActivity">
+        <activity
+            android:name=".ui.userAdd.AddUserActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.user.UserActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

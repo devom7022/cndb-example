@@ -16,15 +16,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.devom.cndb_example.R;
 import com.devom.cndb_example.adapters.UserAdapter;
-import com.devom.cndb_example.app.BaseApplication;
 import com.devom.cndb_example.models.ResultUserList;
 import com.devom.cndb_example.models.User;
 import com.devom.cndb_example.ui.userAdd.AddUserActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
-
-import javax.inject.Inject;
 
 import static com.devom.cndb_example.utils.Constants.RESULT_DATA;
 
@@ -34,15 +31,12 @@ public class UserActivity extends AppCompatActivity implements UserView {
     private static final long SECONDS_LAPSE = 2000;
     UserAdapter adapter;
 
-    @Inject
     UserPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
-
-        ((BaseApplication) getApplication()).plusPresenterSubComponent().inject(this);
 
         progressBar = findViewById(R.id.pb_load);
 
@@ -56,6 +50,10 @@ public class UserActivity extends AppCompatActivity implements UserView {
             toolbar.setTitle(getString(R.string.title_user_list));
         }
 
+        presenter = new UserPresenter();
+        presenter.setView(this);
+        presenter.getUserList();
+
         adapter = new UserAdapter(presenter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
@@ -63,8 +61,6 @@ public class UserActivity extends AppCompatActivity implements UserView {
         rvCity.setAdapter(adapter);
         rvCity.setLayoutManager(layoutManager);
 
-        presenter.setView(this);
-        presenter.getUserList();
     }
 
     @Override

@@ -13,7 +13,7 @@ public class AddUserPresenter implements AddUserInteractor.OnFinishedListener {
         this.interactor = interactor;
     }*/
 
-    public AddUserPresenter() {
+    AddUserPresenter() {
         this.interactor = new AddUserInteractor();
     }
 
@@ -26,6 +26,7 @@ public class AddUserPresenter implements AddUserInteractor.OnFinishedListener {
     }
 
     void setUserToList(User user) {
+        view.showProgress();
         interactor.addUser(user, this);
     }
 
@@ -33,6 +34,7 @@ public class AddUserPresenter implements AddUserInteractor.OnFinishedListener {
     public void onFailure(String error) {
         if (view != null) {
             view.onFailure(error);
+            view.hideProgress();
         }
     }
 
@@ -40,6 +42,7 @@ public class AddUserPresenter implements AddUserInteractor.OnFinishedListener {
     public void onSuccess(List<User> userList) {
         if (view != null) {
             view.onSuccessSave(userList);
+            view.hideProgress();
         }
     }
 }

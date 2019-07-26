@@ -7,9 +7,7 @@ import android.net.NetworkInfo;
 
 import com.devom.cndb_example.di.component.ApplicationComponent;
 import com.devom.cndb_example.di.component.DaggerApplicationComponent;
-import com.devom.cndb_example.di.component.PresenterSubComponent;
 import com.devom.cndb_example.di.module.ApplicationContextModule;
-import com.devom.cndb_example.di.module.PresenterModule;
 
 
 public class BaseApplication extends Application {
@@ -20,7 +18,6 @@ public class BaseApplication extends Application {
     private static NetworkInfo mWifi;
 
     private ApplicationComponent applicationComponent;
-    private PresenterSubComponent presenterSubComponent;
 
     @Override
     public void onCreate() {
@@ -51,16 +48,6 @@ public class BaseApplication extends Application {
 
     public ApplicationComponent getApplicationComponent() {
         return applicationComponent;
-    }
-
-    //PresenterSubComponent
-    public PresenterSubComponent plusPresenterSubComponent() {
-        if (presenterSubComponent == null) {
-            presenterSubComponent = applicationComponent
-                    .plusPresenterSubComponent(new PresenterModule());
-        }
-
-        return presenterSubComponent;
     }
 
 }

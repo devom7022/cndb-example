@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,12 +25,15 @@ import static com.devom.cndb_example.utils.Constants.RESULT_DATA;
 public class AddUserActivity extends AppCompatActivity implements AddUserView {
     private TextInputLayout tilName, tilAge, tilColor;
 
+    ProgressBar progress;
     AddUserPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_user);
+
+        progress = findViewById(R.id.pb_load);
 
         Toolbar toolbar = findViewById(R.id.tb_toolbar);
         if (toolbar != null) {
@@ -64,6 +69,16 @@ public class AddUserActivity extends AppCompatActivity implements AddUserView {
         }
 
         return true;
+    }
+
+    @Override
+    public void showProgress() {
+        progress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progress.setVisibility(View.GONE);
     }
 
     @Override

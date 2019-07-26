@@ -9,8 +9,8 @@ public class UserPresenter implements UserInteractor.OnFinishedListener {
     private UserView view;
     private UserInteractor interactor;
 
-    public UserPresenter(UserInteractor interactor) {
-        this.interactor = interactor;
+    UserPresenter() {
+        this.interactor = new UserInteractor();
     }
 
     void setView(UserView view) {
@@ -31,14 +31,7 @@ public class UserPresenter implements UserInteractor.OnFinishedListener {
         }
         interactor.getUsers(this);
     }
-/*
-    void setUserToList(User user) {
-        if (view != null) {
-            view.showProgress();
-        }
-        interactor.deleteUser(user, this);
-    }
-*/
+
     @Override
     public void onFailure(String error) {
         if (view != null) {
