@@ -46,7 +46,7 @@ public class AddUserActivity extends AppCompatActivity implements AddUserView {
         Button btSave = findViewById(R.id.bt_save);
         btSave.setOnClickListener(v -> {
             if (validData()) {
-                User userSave = new User(tilName.getEditText().getText().toString(),
+                User userSave = new User("",tilName.getEditText().getText().toString(),
                         Integer.parseInt(tilAge.getEditText().getText().toString()),
                         tilColor.getEditText().getText().toString()
                 );

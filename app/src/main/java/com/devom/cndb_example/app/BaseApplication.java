@@ -9,6 +9,9 @@ import com.devom.cndb_example.di.component.ApplicationComponent;
 import com.devom.cndb_example.di.component.DaggerApplicationComponent;
 import com.devom.cndb_example.di.module.ApplicationContextModule;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 
 public class BaseApplication extends Application {
     public static final String TAG = BaseApplication.class.getSimpleName();
@@ -24,6 +27,21 @@ public class BaseApplication extends Application {
         super.onCreate();
         mInstance = this;
         setupGraphApplicationComponent();
+        setupRealm();
+
+    }
+
+    private void setupRealm() {
+        Realm.init(this);
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+                .name(Realm.DEFAULT_REALM_NAME)
+                .schemaVersion(0)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+
+        Realm.setDefaultConfiguration(realmConfiguration);
+        //Realm.deleteRealm(realmConfiguration);
+
     }
 
     //Request Instance

@@ -54,15 +54,19 @@ public class UserActivity extends AppCompatActivity implements UserView {
         presenter.setView(this);
         presenter.getUserList();
 
-        adapter = new UserAdapter(presenter);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-
-        RecyclerView rvCity = findViewById(R.id.rv_users);
-        rvCity.setAdapter(adapter);
-        rvCity.setLayoutManager(layoutManager);
+        setAdapter();
 
     }
 
+    private void setAdapter() {
+        if (adapter == null)
+            adapter = new UserAdapter(presenter);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        RecyclerView rvCity = findViewById(R.id.rv_users);
+        rvCity.setAdapter(adapter);
+        rvCity.setLayoutManager(layoutManager);
+    }
     @Override
     public void showProgress() {
         progressBar.setVisibility(View.VISIBLE);
@@ -75,6 +79,7 @@ public class UserActivity extends AppCompatActivity implements UserView {
 
     @Override
     public void setItemsOnAdapters(List<User> users) {
+        setAdapter();
         adapter.setData(users);
     }
 

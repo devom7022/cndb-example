@@ -9,14 +9,11 @@ public class User implements Parcelable {
     private int age;
     private String color;
 
-    public User(String id, String name, int age, String color) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.color = color;
+    public User() {
     }
 
-    public User(String name, int age, String color) {
+    public User(String id, String name, int age, String color) {
+        this.id = id;
         this.name = name;
         this.age = age;
         this.color = color;

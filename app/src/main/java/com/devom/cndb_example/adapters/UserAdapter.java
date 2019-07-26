@@ -18,8 +18,7 @@ import java.util.List;
 public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
 
     private List<User> userList = new ArrayList<>();
-    private View view;
-    UserPresenter presenter;
+    private UserPresenter presenter;
 
     public UserAdapter() {
     }
@@ -32,7 +31,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
     @NonNull
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_user, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_user, parent, false);
         return new UserViewHolder(view);
     }
 
@@ -45,13 +44,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserViewHolder> {
         holder.ivDelete.setOnClickListener(v -> {
             userList.remove(localItem);
             notifyDataSetChanged();
-/*
-            Intent returnIntent = new Intent();
-            ResultUserList list = new ResultUserList(userList);
-            returnIntent.putExtra(RESULT_DATA, list);
-            ((UserActivity)view.getContext()).setResult(Activity.RESULT_OK,returnIntent);*/
             presenter.deleteUser(localItem);
-
         });
 
     }

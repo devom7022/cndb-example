@@ -1,7 +1,5 @@
 package com.devom.cndb_example.ui.userAdd;
 
-import android.os.Handler;
-
 import com.devom.cndb_example.models.User;
 import com.devom.cndb_example.repository.UsersSource;
 
@@ -16,27 +14,21 @@ public class AddUserInteractor {
 
     }
 
-    public AddUserInteractor() {
+    AddUserInteractor() {
 
     }
 
     void addUser(User user, OnFinishedListener listener) {
-        new Handler().postDelayed(() -> {
+        user.setId(String.valueOf(UsersSource.getInstance().getUsers().size() + 1));
 
-            UsersSource.getInstance().addUser(new User(String.valueOf(UsersSource.getInstance().getUsers().size() + 1),
-                    user.getName(),
-                    user.getAge(),
-                    user.getColor())
-            );
+        UsersSource.getInstance().addUser(user);
 
-            List<User> users = UsersSource.getInstance().getUsers();
+        List<User> users = UsersSource.getInstance().getUsers();
 
-            if (users.size() > 0)
-                listener.onSuccess(users);
-            else
-                listener.onFailure("No hay usuarios registrados");
-
-        }, 1000);
+        if (users.size() > 0)
+            listener.onSuccess(users);
+        else
+            listener.onFailure("No hay usuarios registrados");
     }
 
 }
